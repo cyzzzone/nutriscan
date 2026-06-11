@@ -43,26 +43,26 @@ Projeto desenvolvido como **Projeto Integrador** do Curso de Análise e Desenvol
 ```bash
 git clone [https://github.com/seu-usuario/nutriscan.git](https://github.com/seu-usuario/nutriscan.git)
 cd nutriscan
-
+```
 ### 2. Instalar as Dependências
 Certifique-se de ter o Python instalado. No terminal, execute:
 
 ```bash
 pip install -r requirements.txt
-
+```
 ### 3. Configurar a Chave da IA
 Crie um ficheiro chamado **`.env`** na raiz do projeto e adicione a sua chave de API do Google Gemini:
 
 ```env
 GEMINI_API_KEY="SUA_CHAVE_AQUI"
-
+```
 ### 4. Iniciar o Servidor (Backend)
 Inicie o servidor local FastAPI utilizando o Uvicorn:
 
 ```bash
 uvicorn main:app --reload
 O servidor estará a correr em http://127.0.0.1:8000. Na primeira execução, o banco de dados nutriscan.db será criado automaticamente.
-
+```
 ### 5. Abrir a Interface (Frontend)
 Com o servidor a correr em segundo plano, dê um duplo clique no ficheiro **`index.html`** para abri-lo no seu navegador, ou utilize a extensão *Live Server* do VS Code.
 
