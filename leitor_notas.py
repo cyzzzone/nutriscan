@@ -8,7 +8,7 @@ from collections import Counter  # <-- Adicionado para a lista inteligente
 # CONFIGURAÇÕES GERAIS
 # =========================================================
 # Substitua pela chave que você gerou no Google AI Studio
-GOOGLE_API_KEY = "AIzaSyCGRpk5LoL3ZOVHyFjXcqTdnHwLhNUSAL4"
+GOOGLE_API_KEY = "INSIRA_SUA_CHAVE_AQUI"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # =========================================================
