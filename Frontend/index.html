@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+    <div id="app-container">
+        <header>
+            <h2>NutriScan</h2>
+        </header>
+
+        <main id="telas">
+            <section id="aba-inicio" class="tela ativa">
+                <h3>Meu Resumo</h3>
+                <div class="card-gamificacao">
+                    <div class="pontos-info">
+                        <h4>Nível: <span id="nivel-texto">Iniciante 🥉</span></h4>
+                        <p>Você tem <strong id="pontuacao-texto">0</strong> NutriPontos</p>
+                    </div>
+                </div>
+                <div class="card-grafico">
+                    <div class="grafico-circular" id="grafico-circular">
+                        <div class="grafico-centro">
+                            <span id="porcentagem-texto">0%</span>
+                            <small>Meta Diária</small>
+                        </div>
+                    </div>
+                    <div class="legenda-grafico">
+                        <p>💧 Água dos Alimentos: <strong id="valor-hidratacao">0</strong> / 2000 ml</p>
+                    </div>
+                </div>
+
+                <div class="card-termometro">
+                    <h4>Termômetro de Saúde</h4>
+                    <div class="barra-termometro">
+                        <div id="barra-in-natura" class="segmento in-natura" style="width: 0%;"></div>
+                        <div id="barra-processado" class="segmento processado" style="width: 0%;"></div>
+                        <div id="barra-ultra" class="segmento ultra" style="width: 0%;"></div>
+                    </div>
+                    <div class="legenda-termometro">
+                        <span style="color: #28a745;">In Natura</span>
+                        <span style="color: #ffc107;">Processado</span>
+                        <span style="color: #dc3545;">Ultra</span>
+                    </div>
+                </div>
+
+                <h4>Alertas de Validade</h4>
+                <ul id="lista-validade">
+                    <li>Nenhuma nota escaneada ainda.</li>
+                </ul>
+
+                <button id="btn-receita" onclick="pedirReceita()" style="display: none; margin-bottom: 15px;">🍳 O que
+                    cozinhar hoje?</button>
+                <div id="box-receita" class="card-dica"
+                    style="display: none; background: #e3f2fd; border-left-color: #007bff;">
+                    <strong id="texto-receita">Gerando receita...</strong>
+                </div>
+
+                <h4>Dicas do seu Nutri</h4>
+                <div id="dicas-nutri">
+                    <p style="font-size: 14px; color: #666;">Escaneie uma nota para receber dicas.</p>
+                </div>
+            </section>
+
+            <section id="aba-leitor" class="tela">
+                <h3>Escanear Nota</h3>
+                <p>Cole o link do QR Code da NFC-e:</p>
+                <input type="text" id="input-url" placeholder="https://www.fazenda.pr.gov.br/nfce/..."
+                    value="https://www.fazenda.pr.gov.br/nfce/qrcode?p=41260278413325001327650680003137911904698441|2|1|1|58D4AF6AE2430EF7B89F1343BD8A9D38B678EA60">
+                <button id="btn-extrair" onclick="extrairItensDaNota()">1. Carregar Itens</button>
+                <p id="status-leitor" class="status-msg"></p>
+
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+                <div class="area-manual">
+                    <h4>🍎 Feira Livre / Manual</h4>
+                    <p style="font-size: 12px;">Escreva o que comprou (ex: "3 bananas e 1kg de tomate"):</p>
+                    <textarea id="input-texto-manual" placeholder="Descreva as suas compras aqui..."
+                        style="width: 100%; height: 80px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit;"></textarea>
+                    <button onclick="extrairItensManuais()" style="background: #17a2b8; margin-top: 10px;">Identificar
+                        Alimentos</button>
+                </div>
+
+                <div id="area-selecao"
+                    style="display: none; margin-top: 20px; background: #f8f9fa; padding: 15px; border-radius: 10px; border-left: 4px solid #007bff;">
+                    <h4>Selecione o que salvar:</h4>
+                    <p style="font-size: 12px; margin-top: -10px; margin-bottom: 15px;">Desmarque o que você não quer
+                        analisar.</p>
+                    <div id="lista-checkboxes"
+                        style="max-height: 200px; overflow-y: auto; text-align: left; margin-bottom: 15px;">
+                    </div>
+                    <button onclick="enviarSelecaoParaIA()" style="background: #28a745;">2. Analisar e Salvar</button>
+                </div>
+            </section>
+
+            <section id="aba-lista" class="tela">
+                <h3>Próxima Compra</h3>
+                <button onclick="gerarLista()">Gerar Lista Inteligente</button>
+                <p id="status-lista" class="status-msg"></p>
+
+                <div id="resultado-lista" style="display: none;">
+                    <h4>Sempre Comprados:</h4>
+                    <ul id="itens-base"></ul>
+
+                    <div class="card-ia">
+                        <h4>✨ Sugestão da IA</h4>
+                        <p><strong id="ia-item"></strong></p>
+                        <p id="ia-justificativa"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aba-geladeira" class="tela">
+                <h3>Minha Geladeira</h3>
+                <p>Itens disponíveis na sua despensa:</p>
+                <ul id="lista-despensa" class="lista-interativa">
+                </ul>
+                <button onclick="carregarDespensa()" style="background: #6c757d; margin-top: 10px;">🔄 Atualizar
+                    Inventário</button>
+                <button onclick="limparGeladeira()" style="background: #dc3545; margin-top: 10px;">🗑️ Esvaziar
+                    Geladeira</button>
+            </section>
+
+        </main>
+        <nav>
+            <button onclick="mudarTela('aba-inicio')">🏠 Início</button>
+            <button onclick="mudarTela('aba-geladeira')">❄️ Geladeira</button>
+            <button onclick="mudarTela('aba-leitor')">📷 Leitor</button>
+            <button onclick="mudarTela('aba-lista')">🛒 Lista</button>
+        </nav>
+
+        <div id="popup-feedback" class="popup-oculto">
+            <div class="popup-conteudo">
+                <h3>🎉 Mandou bem!</h3>
+                <p id="texto-dica-popup"></p>
+                <button onclick="fecharPopup()">Ver meu Resumo</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js?v=8"></script>
+</body>
+
+</html>
