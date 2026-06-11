@@ -1,0 +1,356 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#app-container {
+    width: 100%;
+    max-width: 400px;
+    /* Tamanho de celular */
+    height: 80vh;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+header {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+nav {
+    display: flex;
+    background: #007bff;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+nav button {
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Lógica das Telas */
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+/* Elementos Visuais */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.card-hidratacao {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 5px solid #007bff;
+}
+
+.barra-progresso {
+    width: 100%;
+    background: #ccc;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progresso-verde {
+    height: 100%;
+    background: #28a745;
+    transition: width 0.5s ease;
+}
+
+.card-ia {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-left: 5px solid #ffc107;
+}
+
+.status-msg {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 10px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+/* Estilos do Pop-up (Modal) */
+.popup-oculto {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-ativo {
+    display: flex;
+}
+
+.popup-conteudo {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    width: 85%;
+    max-width: 350px;
+    border-top: 6px solid #28a745;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos dos Cards do Dashboard */
+.card-dica {
+    background: #e9ecef;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 4px solid #17a2b8;
+    font-size: 14px;
+}
+
+.card-dica.alerta {
+    border-left-color: #ffc107;
+    background: #fff3cd;
+}
+
+/* --- ESTILOS DO GRÁFICO CIRCULAR --- */
+.card-grafico {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.grafico-circular {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    /* O conic-gradient será desenhado pelo JavaScript */
+    background: conic-gradient(#e0e0e0 100%, #e0e0e0 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.grafico-centro {
+    width: 125px;
+    /* Tamanho do "furo" da rosca */
+    height: 125px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    /* Mesma cor do fundo do card para dar o efeito vazado */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico-centro span {
+    font-size: 28px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: -5px;
+}
+
+.grafico-centro small {
+    font-size: 12px;
+    color: #666;
+}
+
+.legenda-grafico p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+}
+
+* {
+    box-sizing: border-box;
+    /* Aplicando a fonte nova. Se o Google falhar, ele usa a 'monospace' padrão do sistema */
+    font-family: "Comfortaa", sans-serif; 
+}
+
+/* Dica: Deixe o número do gráfico ainda mais destacado */
+.grafico-centro span {
+    font-size: 32px; /* Aumentei um pouco */
+    font-weight: 700;
+    letter-spacing: -1px; /* Deixa os números monoespaçados mais elegantes */
+}
+/* --- ESTILOS DO TERMÔMETRO --- */
+.card-termometro {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.card-termometro h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.barra-termometro {
+    width: 100%;
+    height: 15px;
+    background: #eee;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.segmento {
+    height: 100%;
+    transition: width 1s ease-in-out;
+}
+
+.segmento.in-natura { background: #28a745; }
+.segmento.processado { background: #ffc107; }
+.segmento.ultra { background: #dc3545; }
+
+.legenda-termometro {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* --- ESTILOS DA GELADEIRA --- */
+.lista-interativa {
+    list-style: none;
+    padding: 0;
+}
+
+.item-geladeira {
+    background: #fff;
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-consumir {
+    width: auto;
+    padding: 5px 10px;
+    font-size: 12px;
+    background: #007bff;
+}
+
+.item-consumido {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+/* --- ESTILO DOS CHECKBOXES DE SELEÇÃO --- */
+.item-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.item-checkbox input {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* --- ESTILOS DE GAMIFICAÇÃO --- */
+.card-gamificacao {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(253, 160, 133, 0.3);
+    border: 2px solid #fff;
+}
+
+.card-gamificacao h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.card-gamificacao p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.card-gamificacao strong {
+    font-size: 20px;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 5px;
+}
